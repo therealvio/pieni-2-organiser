@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/pieni-2-organiser/internal/fs"
 )
@@ -13,12 +14,23 @@ type RenameMap map[string]string
 
 // Remove system files like .DS_Store and Thumbs.db from the dirContents struct, we're not interested in managing these
 func CleanupSys(dirContents *fs.Contents) *fs.Contents {
+	// List of unwanted system files
+	systemFiles := []string{".DS_Store", "Thumbs.db"}
+
 	// construct new slice of files - common go practice is to avoid modifying slices in place while iterating over them
 	cleanFiles := make([]string, 0, len(dirContents.Files))
 	for _, file := range dirContents.Files {
 		base := filepath.Base(file)
+		shouldSkip := false
+		for _, sysFile := range systemFiles {
+			// case-insensitive comparison for system files
+			if strings.EqualFold(base, sysFile) {
+				shouldSkip = true
+				break
+			}
+		}
 		// if the file name is not a system file, add it to the cleanFiles slice
-		if base != "Thumbs.db" && base != ".DS_Store" {
+		if !shouldSkip {
 			cleanFiles = append(cleanFiles, file)
 		}
 	}
