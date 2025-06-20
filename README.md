@@ -2,7 +2,8 @@
 
 A dumb file renamer for [a dumber camera](https://kenkoglobal.com/product/toy_camera_pieni_ii/).
 
-![Product Image](./docs/product_image.png)
+<!-- ![Product Image](./docs/product_image.png) -->
+<img src="./docs/product_image.png" style="width:80%;display:block;margin-left:auto;margin-right:auto">
 
 <div align="center"><em>I AM GOING TO SHIT</em></div>
 
