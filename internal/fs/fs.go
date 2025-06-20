@@ -8,7 +8,6 @@ import (
 
 type Contents struct {
 	Files []string
-	Dirs  []string //TODO: dunno if we need dirs yet
 }
 
 func GetContents(root string) (*Contents, error) {
@@ -16,15 +15,11 @@ func GetContents(root string) (*Contents, error) {
 
 	// use a closure to enumerate files and directories and keep dirContents local
 	enumerate := func(path string, d os.DirEntry, err error) error {
-		if d.IsDir() {
-			dirContents.Dirs = append(dirContents.Dirs, path)
-
-		} else {
+		if !d.IsDir() {
 			dirContents.Files = append(dirContents.Files, path)
 		}
 
 		return nil
-
 	}
 
 	err := filepath.WalkDir(root, enumerate)
